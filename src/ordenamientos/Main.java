@@ -24,8 +24,9 @@ public class Main {
         System.out.println("Arreglo Original: ");
         imprimirArreglo(miArreglo);  //Llamada al metodo
 
-        // Ordenamientos.selectionSort(miArreglo);
-        Ordenamientos.bubbleSort(miArreglo);   // llamada a método
+        //Ordenamientos.selectionSort(miArreglo); // llamada a método
+        //Ordenamientos.bubbleSort(miArreglo);   // llamada a método
+        Ordenamientos.insertionSort(miArreglo);
 
         System.out.println("Arreglo Ordenado: ");
         imprimirArreglo(miArreglo);   // llamada a método

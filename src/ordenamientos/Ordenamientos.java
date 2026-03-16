@@ -53,7 +53,25 @@ public class Ordenamientos {
             }
         }
     }
+    
+    // Ordena el arreglo insertando cada elemento en su posición correcta
+    // dentro de la parte ya ordenada del arreglo
+    public static void insertionSort(int[] arr) {
+        int n = arr.length;  // tamaño del arreglo. 1 operación
+        // recorre desde el segundo elemento hasta el final
+        for (int i = 1; i < n; i++) {  // 1 + n + n
+            int key = arr[i];  // elemento actual a insertar. 1
+            int j = i - 1;     // índice del elemento anterior. 1
+            // desplaza los elementos mayores que key una posición a la derecha
+            while (j >= 0 && arr[j] > key) {  // comparación. 1
+                arr[j + 1] = arr[j];  // desplazamiento. 1
+                j = j - 1;            // retrocede una posición. 1
+            }
+            arr[j + 1] = key;  // inserta key en su posición correcta. 1
+        }
+    }
 }
 
-// Ambos metodos de ordenamiento son O(n²) ya que se utilizan 2 ciclos for
-// esto hace que las operaciones crezca como n x n, osea n² cuando se aumenta el tamaño del arreglo.
+// Los tres metodos de ordenamiento son O(n²) en el peor caso
+// ya que utilizan ciclos anidados (for+for o for+while)
+// esto hace que las operaciones crezcan como n x n cuando aumenta el arreglo.
