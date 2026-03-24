@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package ordenamientos;
-
+import java.util.Arrays;
 /**
  *
  * @author Lenovo
@@ -70,8 +70,57 @@ public class Ordenamientos {
             arr[j + 1] = key;  // inserta key en su posición correcta. 1
         }
     }
+    public static void quickSort(int[] arr, int inicio, int fin) {
+        if (inicio < fin) {  // condición base: subarreglo tiene más de 1 elemento. 1
+
+            // particionar y obtener la posición final del pivote
+            int pivoteIndice = particion(arr, inicio, fin);  // llamada al método. 1
+
+            System.out.println("Índice del pivote: " + pivoteIndice +
+                               ". Arreglo actual: " + Arrays.toString(arr));  // impresión. 1
+
+            // Sub arreglo Izquierdo: ordena elementos menores al pivote
+            System.out.println("Izquierda");  // 1
+            quickSort(arr, inicio, pivoteIndice - 1);  // llamada recursiva izquierda. 1
+
+            // Sub arreglo Derecho: ordena elementos mayores al pivote
+            System.out.println("Derecha");  // 1
+            quickSort(arr, pivoteIndice + 1, fin);  // llamada recursiva derecha. 1
+        }
+    }
+
+    // Coloca el pivote (último elemento) en su posición correcta
+    // deja los menores a la izquierda y los mayores a la derecha
+    public static int particion(int[] arr, int inicio, int fin) {
+        int pivote = arr[fin];   // el pivote es siempre el último elemento. 1
+        int i = inicio - 1;      // índice del último elemento menor al pivote. 1
+
+        // recorrer el subarreglo comparando cada elemento con el pivote
+        for (int j = inicio; j < fin; j++) {  // 1 + n + n
+            if (arr[j] < pivote) {  // comparación con el pivote. 1
+                i++;  // ampliar la zona de menores. 1
+
+                // intercambio: mover elemento menor a la zona izquierda
+                int temp = arr[i];  // 1
+                arr[i] = arr[j];    // 1
+                arr[j] = temp;      // 1
+            }
+        }
+
+        // colocar el pivote en su posición correcta
+        int temp = arr[i + 1];  // 1
+        arr[i + 1] = arr[fin];  // 1
+        arr[fin] = temp;        // 1
+
+        return i + 1;  // retorna el índice final del pivote. 1
+    }
 }
 
-// Los tres metodos de ordenamiento son O(n²) en el peor caso
+// SelectionSort, BubbleSort e InsertionSort son O(n²) en el peor caso
 // ya que utilizan ciclos anidados (for+for o for+while)
 // esto hace que las operaciones crezcan como n x n cuando aumenta el arreglo.
+
+// QuickSort es O(n log n) en el caso promedio y mejor caso.
+// En cada nivel de recursión se procesan n elementos (particion),
+// y hay log n niveles cuando el pivote divide el arreglo equilibradamente.
+// En el peor caso (arreglo ya ordenado, pivote siempre extremo) sube a O(n²).
