@@ -9,7 +9,8 @@ import java.util.Arrays;
  * @author Lenovo
  */
 public class Ordenamientos {
-     // Metodo de ordenamiento Selection Sort
+
+    // Metodo de ordenamiento Selection Sort
     public static void selectionSort(int[] arr) {
         int n = arr.length;  // tamaño del arreglo. 1 operación
 
@@ -19,8 +20,7 @@ public class Ordenamientos {
 
             // buscar el elemento más pequeño en el resto del arreglo
             for (int j = i + 1; j < n; j++) { // 1 + n + n
-                
-                if (arr[j] < arr[min]) {  // comparación. 1 
+                if (arr[j] < arr[min]) {  // comparación. 1
                     min = j;    // actualizar posición del mínimo. 1
                 }
             }
@@ -28,11 +28,11 @@ public class Ordenamientos {
             // intercambio de elementos
             int temp = arr[i]; // 1
             arr[i] = arr[min]; // 1
-            arr[min] = temp; // 1
+            arr[min] = temp;   // 1
         }
     }
 
-    // Ordena el arreglo comparando pares de elementos adyacentes 
+    // Ordena el arreglo comparando pares de elementos adyacentes
     // e intercambiándolos si están en el orden incorrecto
     public static void bubbleSort(int[] arr) {
         int n = arr.length; // 1
@@ -41,7 +41,6 @@ public class Ordenamientos {
         for (int i = 0; i < n - 1; i++) {  // 1 + n + n
             // Bucle interno, compara elementos adyacentes
             for (int j = 0; j < n - i - 1; j++) { // 1 + n + n
-
                 // comparación entre elementos adyacentes
                 if (arr[j] > arr[j + 1]) {  // 1
                     // intercambio de valores
@@ -49,11 +48,10 @@ public class Ordenamientos {
                     arr[j] = arr[j + 1];    // 1
                     arr[j + 1] = temp;      // 1
                 }
-
             }
         }
     }
-    
+
     // Ordena el arreglo insertando cada elemento en su posición correcta
     // dentro de la parte ya ordenada del arreglo
     public static void insertionSort(int[] arr) {
@@ -70,6 +68,7 @@ public class Ordenamientos {
             arr[j + 1] = key;  // inserta key en su posición correcta. 1
         }
     }
+
     public static void quickSort(int[] arr, int inicio, int fin) {
         if (inicio < fin) {  // condición base: subarreglo tiene más de 1 elemento. 1
 
@@ -114,6 +113,88 @@ public class Ordenamientos {
 
         return i + 1;  // retorna el índice final del pivote. 1
     }
+
+    // -----------------------------------------------------------------------
+    // MergeSort
+    // Divide el arreglo en mitades de forma recursiva y luego las fusiona
+    // ordenadas. Complejidad: O(n log n) en todos los casos.
+    // -----------------------------------------------------------------------
+
+    /**
+     * MERGE-SORT(A, izquierda, derecha)
+     *   Si izquierda < derecha entonces
+     *     medio <- izquierda + (derecha - izquierda) / 2
+     *     MERGE-SORT(A, izquierda, medio)
+     *     MERGE-SORT(A, medio+1, derecha)
+     *     MERGE(A, izquierda, medio, derecha)
+     */
+    public static void mergeSort(int[] arr, int izquierda, int derecha) {
+        // Caso base: el subarreglo tiene 1 o 0 elementos, ya está ordenado
+        if (izquierda < derecha) {
+            // Calcular el punto medio evitando desbordamiento de enteros
+            int medio = izquierda + (derecha - izquierda) / 2;
+
+            // Llamada recursiva sobre la mitad izquierda
+            mergeSort(arr, izquierda, medio);
+
+            // Llamada recursiva sobre la mitad derecha
+            mergeSort(arr, medio + 1, derecha);
+
+            // Fusionar las dos mitades ya ordenadas
+            merge(arr, izquierda, medio, derecha);
+        }
+    }
+
+    // Fusiona dos subarreglos ordenados: arr[izquierda..medio] y arr[medio+1..derecha]
+    public static void merge(int[] arr, int izquierda, int medio, int derecha) {
+
+        // Calcular el tamaño de los dos sub-arreglos temporales
+        int n1 = medio - izquierda + 1;  // tamaño de la mitad izquierda. 1
+        int n2 = derecha - medio;         // tamaño de la mitad derecha.  1
+
+        // Crear los arreglos temporales
+        int[] izquierdaArr = new int[n1];  // 1
+        int[] derechaArr   = new int[n2];  // 1
+
+        // Copiar los datos del arreglo original a los sub-arreglos temporales
+        for (int i = 0; i < n1; i++) {   // 1 + n1 + n1
+            izquierdaArr[i] = arr[izquierda + i];  // 1
+        }
+        for (int j = 0; j < n2; j++) {   // 1 + n2 + n2
+            derechaArr[j] = arr[medio + 1 + j];    // 1
+        }
+
+        int i = 0;           // índice del sub-arreglo izquierdo. 1
+        int j = 0;           // índice del sub-arreglo derecho.   1
+        int k = izquierda;   // índice de escritura en el arreglo original. 1
+
+        // Mientras ambos sub-arreglos tengan elementos, insertar el menor
+        while (i < n1 && j < n2) {  // comparación. 1
+            // El <= hace el algoritmo estable (elementos iguales mantienen su orden)
+            if (izquierdaArr[i] <= derechaArr[j]) {  // 1
+                arr[k] = izquierdaArr[i];  // 1
+                i++;                       // 1
+            } else {
+                arr[k] = derechaArr[j];    // 1
+                j++;                       // 1
+            }
+            k++;  // 1
+        }
+
+        // Copiar los elementos restantes de la mitad izquierda (si los hay)
+        while (i < n1) {           // 1
+            arr[k] = izquierdaArr[i];  // 1
+            i++;                       // 1
+            k++;                       // 1
+        }
+
+        // Copiar los elementos restantes de la mitad derecha (si los hay)
+        while (j < n2) {           // 1
+            arr[k] = derechaArr[j];    // 1
+            j++;                       // 1
+            k++;                       // 1
+        }
+    }
 }
 
 // SelectionSort, BubbleSort e InsertionSort son O(n²) en el peor caso
@@ -124,3 +205,7 @@ public class Ordenamientos {
 // En cada nivel de recursión se procesan n elementos (particion),
 // y hay log n niveles cuando el pivote divide el arreglo equilibradamente.
 // En el peor caso (arreglo ya ordenado, pivote siempre extremo) sube a O(n²).
+
+// MergeSort es O(n log n) en TODOS los casos (mejor, promedio y peor).
+// Divide el arreglo log n veces y en cada nivel fusiona n elementos en total.
+// Requiere O(n) de memoria auxiliar para los sub-arreglos temporales.

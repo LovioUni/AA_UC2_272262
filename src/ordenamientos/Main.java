@@ -27,8 +27,9 @@ public class Main {
         //Ordenamientos.selectionSort(miArreglo); // llamada a método
         //Ordenamientos.bubbleSort(miArreglo);   // llamada a método
         //Ordenamientos.insertionSort(miArreglo); // Llamada a metodo
-        Ordenamientos.quickSort(miArreglo, 0, miArreglo.length - 1);
-
+        //Ordenamientos.quickSort(miArreglo, 0, miArreglo.length - 1);
+        Ordenamientos.mergeSort(miArreglo, 0, miArreglo.length - 1);
+        
         System.out.println("Arreglo Ordenado: ");
         imprimirArreglo(miArreglo);   // llamada a método
     }
